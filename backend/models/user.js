@@ -4,9 +4,10 @@ const Schema = mongoose.Schema;
 const userSchema = new Schema({
   sport: String,
   league: String,
-  Team: String,
-  Role: String,
-  Name: String,
+  team: String,
+  staffingDivision: String,
+  role: String,
+  name: String,
   username: String,
   password: String
 });
