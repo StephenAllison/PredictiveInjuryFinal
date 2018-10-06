@@ -1,7 +1,7 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
-const userSchema = new Schema({
+const athleteProfileSchema = new Schema({
   sport: String,
   league: String,
   team: String,
@@ -15,6 +15,6 @@ const userSchema = new Schema({
   socialModeratingFactorScore: Number
 });
 
-const User = mongoose.model("User", userSchema);
+const AthleteProfile = mongoose.model("AthleteProfile", athleteProfileSchema);
 
-module.exports = User;
+module.exports = AthleteProfile;
