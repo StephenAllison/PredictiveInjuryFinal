@@ -18,7 +18,7 @@ require("./config/passport");
 mongoose.Promise = Promise;
 mongoose
   .connect(
-    "mongodb://localhost/project-management-express-api",
+    "mongodb://localhost/predictive-injury-final",
     { useMongoClient: true }
   )
   .then(() => {

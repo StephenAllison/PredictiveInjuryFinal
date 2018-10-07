@@ -12,6 +12,12 @@ const userSchema = new Schema({
   password: String
 });
 
-const User = mongoose.model("User", userSchema);
+let User;
+try {
+  User = mongoose.model("users");
+} catch (error) {
+  users = mongoose.model("users", userSchema);
+}
+// const User = mongoose.model("User", userSchema);
 
 module.exports = User;

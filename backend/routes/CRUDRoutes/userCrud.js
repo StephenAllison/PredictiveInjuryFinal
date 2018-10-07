@@ -2,14 +2,14 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const userProfile = require("../../models/user");
+const user = require("../../models/user");
 
 // GET route => to Get Full Athlete Profile
-router.get("/userProfile", (req, res, next) => {
-  userProfile
+router.get("/user", (req, res, next) => {
+  user
     .find()
-    .then(userProfile => {
-      res.json(userProfile);
+    .then(user => {
+      res.json(user);
     })
     .catch(err => {
       res.json(err);
@@ -17,7 +17,7 @@ router.get("/userProfile", (req, res, next) => {
 });
 
 // GET route => Find a Specific User by Id
-router.get("/userProfile/:id", (req, res, next) => {
+router.get("/user/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
@@ -28,7 +28,7 @@ router.get("/userProfile/:id", (req, res, next) => {
   //                                   ^
   //                                   |
   //                                   |
-  userProfile
+  user
     .findById(req.params.id)
     .then(response => {
       res.json(response);
@@ -39,7 +39,7 @@ router.get("/userProfile/:id", (req, res, next) => {
 });
 
 // PUT route => Update User Profile
-router.put("/userProfile/:id", (req, res, next) => {
+router.put("/user/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
     res.status(400).json({ message: "Specified id is not valid" });
     return;
@@ -47,7 +47,7 @@ router.put("/userProfile/:id", (req, res, next) => {
 
   console.log(req.body);
 
-  userProfile
+  user
     .findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
       res.json({
@@ -69,7 +69,7 @@ router.delete("/user/:id", (req, res, next) => {
   Project.findByIdAndRemove(req.params.id)
     .then(() => {
       res.json({
-        message: `User with ${req.params.id} has been successfully removed.`
+        message: `user with ${req.params.id} has been successfully removed.`
       });
     })
     .catch(err => {
