@@ -2,11 +2,11 @@
 const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
-const user = require("../../models/user");
+const User = require("../../models/User.js");
 
 // GET route => to Get Full Athlete Profile
 router.get("/user", (req, res, next) => {
-  user
+  User
     .find()
     .then(user => {
       res.json(user);
@@ -19,7 +19,9 @@ router.get("/user", (req, res, next) => {
 // GET route => Find a Specific User by Id
 router.get("/user/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Specified id is not valid" });
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
     return;
   }
 
@@ -28,7 +30,7 @@ router.get("/user/:id", (req, res, next) => {
   //                                   ^
   //                                   |
   //                                   |
-  user
+  User
     .findById(req.params.id)
     .then(response => {
       res.json(response);
@@ -41,13 +43,15 @@ router.get("/user/:id", (req, res, next) => {
 // PUT route => Update User Profile
 router.put("/user/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Specified id is not valid" });
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
     return;
   }
 
   console.log(req.body);
 
-  user
+  User
     .findByIdAndUpdate(req.params.id, req.body)
     .then(() => {
       res.json({
@@ -62,7 +66,9 @@ router.put("/user/:id", (req, res, next) => {
 // DELETE route => to delete a specific User
 router.delete("/user/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Specified id is not valid" });
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
     return;
   }
 
