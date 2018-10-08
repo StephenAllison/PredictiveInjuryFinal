@@ -32,13 +32,13 @@ router.post("/createNewAthlete", (req, res, next) => {
       name: req.body.name,
       position: req.body.position,
       physicalMediatingFactorScore: req.body.physicalMediatingFactorScore,
-      psychologicalMediatingFactorScore:
-        req.body.psychologicalMediatingFactorScore,
+      psychologicalMediatingFactorScore: req.body.psychologicalMediatingFactorScore,
       socialMediatingFactorScore: req.body.socialMediatingFactorScore,
       physicalModeratingFactorScore: req.body.physicalModeratingFactorScore,
-      psychologicalModeratingFactorScore:
-        req.body.psychologicalModeratingFactorScore,
-      socialModeratingFactorScore: req.body.socialModeratingFactorScore
+      psychologicalModeratingFactorScore: req.body.psychologicalModeratingFactorScore,
+      socialModeratingFactorScore: req.body.socialModeratingFactorScore,
+      injuryRiskScore: req.body.injuryRiskScore,
+      riskLevel: req.body.riskLevel,
     })
     .then(response => {
       res.json(response);
@@ -50,7 +50,9 @@ router.post("/createNewAthlete", (req, res, next) => {
 //GET route => Find Athlete By ID
 router.get("/athlete/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Specified id is not valid" });
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
     return;
   }
 
@@ -68,7 +70,9 @@ router.get("/athlete/:id", (req, res, next) => {
 //PUT route => Update Athlete
 router.put("/updateAthleteProfile/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Specified id is not valid" });
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
     return;
   }
 
@@ -86,7 +90,9 @@ router.put("/updateAthleteProfile/:id", (req, res, next) => {
 //Delete route => Delete Athlete
 router.delete("/deleteAthlete/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({ message: "Specified id is not valid" });
+    res.status(400).json({
+      message: "Specified id is not valid"
+    });
     return;
   }
 

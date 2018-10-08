@@ -2,6 +2,7 @@ const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
 
 const athleteProfileSchema = new Schema({
+  img: String,
   sport: String,
   league: String,
   team: String,
@@ -12,7 +13,9 @@ const athleteProfileSchema = new Schema({
   socialMediatingFactorScore: Number,
   physicalModeratingFactorScore: Number,
   psychologicalModeratingFactorScore: Number,
-  socialModeratingFactorScore: Number
+  socialModeratingFactorScore: Number,
+  injuryRiskScore: Number,
+  riskLevel: String,
 });
 
 const AthleteProfile = mongoose.model("AthleteProfile", athleteProfileSchema);

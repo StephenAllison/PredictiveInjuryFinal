@@ -9,9 +9,13 @@ const bcrypt = require("bcryptjs");
 // require the user model !!!!
 const User = require("../models/User.js");
 authRoutes.post("/signup", (req, res, next) => {
+  console.log(req.body)
+
+  // const img = req
   const sport = req.body.sport;
   const league = req.body.league;
   const team = req.body.team;
+  const staffingDivision = req.body.staffingDivision;
   const role = req.body.role;
   const name = req.body.name;
   const username = req.body.username;
@@ -20,6 +24,7 @@ authRoutes.post("/signup", (req, res, next) => {
   if (!username || !password) {
     res.status(400).json({
       message: "Provide username and password"
+
     });
     return;
   }
@@ -54,7 +59,7 @@ authRoutes.post("/signup", (req, res, next) => {
       sport: sport,
       league: league,
       team: team,
-      staffType: staffType,
+      staffingDivision: staffingDivision,
       role: role,
       name: name,
       username: username,

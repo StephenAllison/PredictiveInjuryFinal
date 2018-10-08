@@ -18,8 +18,9 @@ require("./config/passport");
 mongoose.Promise = Promise;
 mongoose
   .connect(
-    "mongodb://localhost/predictive-injury-final",
-    { useMongoClient: true }
+    "mongodb://localhost/predictive-injury-final", {
+      useMongoClient: true
+    }
   )
   .then(() => {
     console.log("Connected to Mongo!");
@@ -38,7 +39,9 @@ const app = express();
 // Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: false }));
+app.use(bodyParser.urlencoded({
+  extended: false
+}));
 app.use(cookieParser());
 
 // Express View engine setup
@@ -88,6 +91,8 @@ app.use("/api", medicalForms);
 
 const athleteProfile = require("./routes/CRUDRoutes/athleteProfileCrud");
 app.use("/api", athleteProfile);
+
+
 
 const authRoutes = require("./routes/auth-routes");
 app.use("/api", authRoutes);
