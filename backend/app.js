@@ -18,8 +18,9 @@ require("./config/passport");
 mongoose.Promise = Promise;
 mongoose
   .connect(
-    "mongodb://localhost/predictive-injury-final", {
-      useMongoClient: true
+    "mongodb://localhost/predictive-injury-final",
+    {
+      useNewUrlParser: true
     }
   )
   .then(() => {
@@ -39,9 +40,11 @@ const app = express();
 // Middleware Setup
 app.use(logger("dev"));
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({
-  extended: false
-}));
+app.use(
+  bodyParser.urlencoded({
+    extended: false
+  })
+);
 app.use(cookieParser());
 
 // Express View engine setup
@@ -80,21 +83,19 @@ app.use(
   })
 );
 
-const index = require("./routes/index");
+const index = require("./routes/api");
 app.use("/", index);
 
-const userCrudRoutes = require("./routes/CRUDRoutes/userCrud");
+const userCrudRoutes = require("./routes/api/CRUDRoutes/userCrud");
 app.use("/api", userCrudRoutes);
 
-const medicalForms = require("./routes/CRUDRoutes/medicalForms");
+const medicalForms = require("./routes/api/CRUDRoutes/medicalForms");
 app.use("/api", medicalForms);
 
-const athleteProfile = require("./routes/CRUDRoutes/athleteProfileCrud");
+const athleteProfile = require("./routes/api/CRUDRoutes/athleteProfileCrud");
 app.use("/api", athleteProfile);
 
-
-
-const authRoutes = require("./routes/auth-routes");
+const authRoutes = require("./routes/api/auth-routes");
 app.use("/api", authRoutes);
 
 module.exports = app;
