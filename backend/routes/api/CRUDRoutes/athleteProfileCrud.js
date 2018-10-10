@@ -3,6 +3,8 @@ const express = require("express");
 const router = express.Router();
 const mongoose = require("mongoose");
 const athleteProfile = require("../../../models/athleteProfile");
+const uploadCloud = require("../config/cloudinary.js");
+const multer = require("multer");
 
 // GET route => to Get Full Athlete Profile
 router.get("/athleteProfile", (req, res, next) => {
@@ -19,13 +21,12 @@ router.get("/athleteProfile", (req, res, next) => {
 });
 
 // POST route => to create a new Athlete Profile
-router.post("/createNewAthlete", (req, res, next) => {
-  // if (req.user.role === "medstaff") {
-  //   return res.redirect("/");
-  // }
-
-  athleteProfile
-    .create({
+router.put(
+  "/createNewAthlete",
+  uploadCloud.single("photo"),
+  (req, res, next) => {
+    athleteProfile.create({
+      img: req.file.url,
       sport: req.body.sport,
       league: req.body.league,
       team: req.body.team,
@@ -40,15 +41,12 @@ router.post("/createNewAthlete", (req, res, next) => {
         req.body.psychologicalModeratingFactorScore,
       socialModeratingFactorScore: req.body.socialModeratingFactorScore,
       injuryRiskScore: req.body.injuryRiskScore,
-      riskLevel: req.body.riskLevel
-    })
-    .then(response => {
-      res.json(response);
-    })
-    .catch(err => {
-      res.json(err);
+      riskLevel: req.body.riskLevel,
+      i
     });
-});
+  }
+);
+
 //GET route => Find Athlete By ID
 router.get("/athlete/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
@@ -70,25 +68,47 @@ router.get("/athlete/:id", (req, res, next) => {
     });
 });
 //PUT route => Update Athlete
-router.put("/updateAthleteProfile/:id", (req, res, next) => {
-  if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
-    res.status(400).json({
-      message: "Specified id is not valid"
-    });
-    return;
-  }
-
-  athleteProfile
-    .findByIdAndUpdate(req.params.id, req.body)
-    .then(() => {
-      res.json({
-        message: `Profile ${req.params.id} has been updated successfully.`
+router.put(
+  "/updateAthleteProfile/:id",
+  uploadCloud.single("photo"),
+  (req, res, next) => {
+    if (!mongoose.Types.ObjectId.isValid(req.params.id)) {
+      res.status(400).json({
+        message: "Specified id is not valid"
       });
-    })
-    .catch(err => {
-      res.json(err);
-    });
-});
+      return;
+    }
+    const athleteID = req.params.id
+      .findByIdAndUpdate(athleteID, {
+        img: req.file.url,
+        img: req.body.img,
+        sport: req.body.sport,
+        league: req.body.league,
+        team: req.body.team,
+        name: req.body.name,
+        position: req.body.position,
+        physicalMediatingFactorScore: req.body.physicalMediatingFactorScore,
+        psychologicalMediatingFactorScore:
+          req.body.psychologicalMediatingFactorScore,
+        socialMediatingFactorScore: req.body.socialMediatingFactorScore,
+        physicalModeratingFactorScore: req.body.physicalModeratingFactorScore,
+        psychologicalModeratingFactorScore:
+          req.body.psychologicalModeratingFactorScore,
+        socialModeratingFactorScore: req.body.socialModeratingFactorScore,
+        injuryRiskScore: req.body.injuryRiskScore,
+        riskLevel: req.body.riskLevel
+        // password:     hashPass,
+      })
+      .then(() => {
+        res.json({
+          message: `Profile ${req.params.id} has been updated successfully.`
+        });
+      })
+      .catch(err => {
+        res.json(err);
+      });
+  }
+);
 //Delete route => Delete Athlete
 router.delete("/deleteAthlete/:id", (req, res, next) => {
   if (!mongoose.Types.ObjectId.isValid(req.params.id)) {

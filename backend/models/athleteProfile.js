@@ -15,7 +15,7 @@ const athleteProfileSchema = new Schema({
   psychologicalModeratingFactorScore: Number,
   socialModeratingFactorScore: Number,
   injuryRiskScore: Number,
-  riskLevel: String,
+  riskLevel: String
 });
 
 const AthleteProfile = mongoose.model("AthleteProfile", athleteProfileSchema);
